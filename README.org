@@ -1,0 +1,10 @@
+# bean-cron
+
+This is a subsystem inteded to work with beancount to automatically add
+standing orders to your beancount file. 
+
+## Why?
+
+To avoid having to enter monthly payments over and over again
+
+
