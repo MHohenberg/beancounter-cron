@@ -53,6 +53,7 @@ Every line is a cron entry. Such an entry may look like this:
 
     2019-01-01 monthly 450.00 EUR Assets:BankAccount Expenses:Rent * "Landlord"
     2019-01-15 2weekly 2200.00 EUR Income:Salary Assets:BankAccount * "Employer Inc."
+    2019-02-01 once 12.00 EUR Assets:Cash Expenses:BusPass * "Foreign Town"
 
 The first line sets up a monthly payment, to the first of every month, of 450 Euro from 
 the Account Assets:BankAccount to the Account Expenses:Rent. The next payment will be 
@@ -61,10 +62,13 @@ the on the 1st of January, 2019
 The second line sets up a payment from your employer to your Assets:BankAccount every 
 other week, the next payment will happen on the  15th of January, 2019
 
+On the first of February, you plan to pay a one-time payment of 12 Euro to a Foreign town for a buss pass
+
 *** Designators
 
 | Designator | Explanation                                                                                  |
 |------------+----------------------------------------------------------------------------------------------|
+| once       | exactly once. Entry will be deleted after it has been executed.                              |
 | daily      | every day                                                                                    |
 | weekly     | every week on that workday                                                                   |
 | monthly    | every calendar month on that day (if the day does not exist, use the day immediately before) |
