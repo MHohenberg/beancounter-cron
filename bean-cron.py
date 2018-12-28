@@ -25,11 +25,14 @@ def getNextDate(startDate, designator):
         multiplier = int(designator[0])
         designator = designator[1,]
 
+    if (designator == "once"):
+        return startDate
+
     if (designator == "yearly"):
-        
+        endDate = startDate.addYear(1*multiplier)        
         
     if (designator == "monthly"):
-        
+        endDate = startDate.addMonth(1*multiplier)       
         
     if (designator == "weekly"):
         days = 7*multiplier
@@ -38,7 +41,6 @@ def getNextDate(startDate, designator):
     if (designator == "daily"):
         days = 1*multiplier
         endDate = startDate.addDays(days)
-
 
 def readConfig():
     return []
@@ -52,9 +54,42 @@ configFields = readConfig()
 ## copy all the relevant files to the backup subdir
 
 # read the cron file
-## for each entry, check if the date is in the past
-### if so: calculate the new date, add a payment into the prepared outfile
-### then update the entry in the cronfile
-### else: the new entry = the old entry
+cronEntries = file_read_contents(cronfile)
+
+
+cronfile = ""
+outfile = ""
+
+
+for (entry in cronEntries):
+
+    ## for each entry, check if the date is in the past
+    list(date, schedule, amount, currency, fromAccount, toAccount, M, payee) = entry.split(" ")
+    
+    startDate = dateTime.parse(date)
+    if (startDate <= dateTime.date.today()):
+        ### if so: calculate the new date
+        endDate = getNextDate(startDate, schedule)
+
+        ### add a payment into the prepared outfile
+        outFileEntry += startDate+" "+M+" "+payee+"\n"
+        outFileEntry += "  "+fromAccount+"     -"+amount+" "+currency+" \n"
+        outFileEntry += "  "+toAccount+" \n\n"
+        
+        ### then update the entry in the cronfile
+        newCronLine =  endDate + " "
+        newCronLine += schedule + " "
+        newCronLine += amount + " "
+        newCronLine += currency + " "
+        newCronLine += fromAccount + " "
+        newCronLine += toAccount + " "
+        newCronLine += M + " "
+        newCronLine += payee + "\n"
+        
+    else: 
+        ### else: the new entry = the old entry
+        newCronLine = entry
+
+    print newCronLine
 
 # attach the outfile to the the beancount-file

@@ -14,6 +14,8 @@ To avoid having to enter monthly payments over and over again
   that if you use currency symbols or accounts that are not yet inexistance, your
   beancount-file might become corrupt - nothing a text editor session won't fix, though
 
+- beancount-cron does not currently try to enable automatic complex payments in which more than two accounts are being affected.
+
 - beancount-cron does not strive to achieve more precise payment executions than daily. 
   Frankly, if you need something even more precise, beancount may not be the right software
   for you to begin with ;)
@@ -38,6 +40,7 @@ beancount-cron will also create backups in ~/.beancount-cron/backups for up to 3
 
 | key                     | values                     | default                   | explanation                                                                                                                                        |
 |-------------------------+----------------------------+---------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------|
+| accounting_method       | catchall, exact            | catchall                  | if exact, both lines will have corresponding values attached to them.                                                                              |
 | backup_enabled          | yes,no                     | yes                       | if yes, backups of the files will be kept                                                                                                          |
 | backup_autoclean        | int value                  | 30                        | number of days for which backups will be kept.                                                                                                     |
 | backup_directory        | path                       | ~/.beancount-cron/backups | Directory where backups are being stored                                                                                                           |
