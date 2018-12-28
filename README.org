@@ -1,10 +1,21 @@
-# bean-cron
+* bean-cron
 
 This is a subsystem inteded to work with beancount to automatically add
 standing orders to your beancount file. 
 
-## Why?
+** Why?
 
 To avoid having to enter monthly payments over and over again
 
+** Basic format
 
+** Designators
+
+| Designator | Explanation                                                                                  |
+|------------+----------------------------------------------------------------------------------------------|
+| daily      | every day                                                                                    |
+| weekly     | every week on that workday                                                                   |
+| monthly    | every calendar month on that day (if the day does not exist, use the day immediately before) |
+| yearly     | every calendar year on that day (if the day does not exist, use the day immediately before)  |
+
+You can modify this by adding a digit (e.g. 4daily = every four days)
