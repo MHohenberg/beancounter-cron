@@ -7,9 +7,47 @@ standing orders to your beancount file.
 
 To avoid having to enter monthly payments over and over again
 
-** Basic format
 
-** Designators
+* Configuration
+
+beancount-cron expects the following files to be present:
+
+| Filename                 | Description                                   |
+|--------------------------+-----------------------------------------------|
+| ~/.beancount-cron/config | the basic config file                         |
+| ~/.beancount-cron/cron   | the file that describes the diverse cronfiles |
+| ~/.beancount-cron/bcfile | a symlink to your beancount-file              |
+
+beancount-cron will also create backups in ~/.beancount-cron/backups for up to 30 days (unless otherwise specified in the config files)
+
+** config
+
+| key                     | values                     | default                   | explanation                                                                                                                                        |
+|-------------------------+----------------------------+---------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------|
+| backup_enabled          | yes,no                     | yes                       | if yes, backups of the files will be kept                                                                                                          |
+| backup_autoclean        | int value                  | 30                        | number of days for which backups will be kept.                                                                                                     |
+| backup_directory        | path                       | ~/.beancount-cron/backups | Directory where backups are being stored                                                                                                           |
+| date_calculation_method | from-startDate, from-today | from-startDate            | if a date in the cronfile is far in the past, which date is the next date: the next that would have naturally occurred or the next one from today? |
+| log_level               | int value (0-5)            | 3                         | Loglevel. Higher number = more log messages. 0=disable logging                                                                                     |
+| log_file                | path + filename            | ~/.beancount-cron/log     | filename of the logfile.                                                                                                                           |
+
+** cron
+
+*** Basic format
+
+Every line is a cron entry. Such an entry may look like this:
+
+    2019-01-01 monthly 450.00 EUR Assets:BankAccount Expenses:Rent * "Landlord"
+    2019-01-15 2weekly 2200.00 EUR Income:Salary Assets:BankAccount * "Employer Inc."
+
+The first line sets up a monthly payment, to the first of every month, of 450 Euro from 
+the Account Assets:BankAccount to the Account Expenses:Rent. The next payment will be 
+the on the 1st of January, 2019
+
+The second line sets up a payment from your employer to your Assets:BankAccount every 
+other week, the next payment will happen on the  15th of January, 2019
+
+*** Designators
 
 | Designator | Explanation                                                                                  |
 |------------+----------------------------------------------------------------------------------------------|
@@ -19,6 +57,12 @@ To avoid having to enter monthly payments over and over again
 | yearly     | every calendar year on that day (if the day does not exist, use the day immediately before)  |
 
 You can modify this by adding a digit (e.g. 4daily = every four days)
+*** About the mechanism
+
+Be aware that the cron file, unlike the cron files of the cron subsystem, 
+changes over time and gets updated with the next day a payment is expected
+to occur. 
+
 
 * License
 

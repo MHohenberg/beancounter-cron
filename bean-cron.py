@@ -39,7 +39,22 @@ def getNextDate(startDate, designator):
         days = 1*multiplier
         endDate = startDate.addDays(days)
 
-# open the file
 
-# do the goddamn stuff
+def readConfig():
+    return []
+        
+# read the config file
+configFields = readConfig()
 
+# if backups are enabled
+## delete old backups
+## create a new backup subdir
+## copy all the relevant files to the backup subdir
+
+# read the cron file
+## for each entry, check if the date is in the past
+### if so: calculate the new date, add a payment into the prepared outfile
+### then update the entry in the cronfile
+### else: the new entry = the old entry
+
+# attach the outfile to the the beancount-file
